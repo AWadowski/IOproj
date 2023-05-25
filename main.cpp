@@ -1,7 +1,10 @@
 #include <iostream>
 #include "Uczelnia.h"
 
-void uruchomMenuStudenta(Uczelnia& uczelnia) {
+
+Student student; 
+
+void uruchomMenuStudenta(Uczelnia& uczelnia, Student& student) {
     int wybor;
     // Dodaj logikę i menu dla studenta
     while (true) {
@@ -60,7 +63,7 @@ void uruchomMenuWykladowcy(Uczelnia& uczelnia) {
 }
 
 
-void logowanieStudenta(Uczelnia& uczelnia) {
+Student logowanieStudenta(Uczelnia& uczelnia) {
     std::string login, haslo;
     int wybor;
 
@@ -75,12 +78,35 @@ void logowanieStudenta(Uczelnia& uczelnia) {
     for (int i = 0; i < uczelnia.ListaStudentow.size(); i++) {
         if (uczelnia.ListaStudentow[i].login == login && uczelnia.ListaStudentow[i].haslo == haslo) {
             std::cout << "Poprawnie zalogowano" << std::endl;
-            uruchomMenuStudenta(uczelnia);
-            return;
+            return uczelnia.ListaStudentow[i];
         }
     }
 
     std::cout << "Błędne dane logowania" << std::endl;
+    return Student();
+}
+
+Wykladowca logowanieWykladowcy(Uczelnia& uczelnia) {
+    std::string login, haslo;
+    int wybor;
+
+    std::cout << "Witaj w systemie uczelni " << uczelnia.nazwa << std::endl;
+    std::cout << "Podaj dane logowania" << std::endl;
+    std::cout << "Login: ";
+    std::cin >> login;
+    std::cout << "Hasło: ";
+    std::cin >> haslo;
+    std::cout << "Trwa logowanie" << std::endl;
+
+    for (int i = 0; i < uczelnia.ListaWykladowcow.size(); i++) {
+        if (uczelnia.ListaWykladowcow[i].login == login && uczelnia.ListaWykladowcow[i].haslo == haslo) {
+            std::cout << "Poprawnie zalogowano" << std::endl;
+            return uczelnia.ListaWykladowcow[i];
+        }
+    }
+
+    std::cout << "Błędne dane logowania" << std::endl;
+    return Wykladowca();
 }
 
 void uruchomMenu(Uczelnia& uczelnia) {
@@ -91,13 +117,18 @@ void uruchomMenu(Uczelnia& uczelnia) {
     std::cout << "1. Zaloguj się jako student" << std::endl;
     std::cout << "2. Zaloguj się jako wykładowca" << std::endl;
     std::cin >> wybor;
-
+    Student zalogowanyStudent;
+    Wykladowca zalogowanyWykladowca;
     switch (wybor) {
         case 1:
-            logowanieStudenta(uczelnia);
+            zalogowanyStudent = logowanieStudenta(uczelnia);
+            if(zalogowanyStudent.id != 0){
+            uruchomMenuStudenta(uczelnia, zalogowanyStudent);
+            }
             break;
         case 2:
-            // uruchomLoginWykladowcy(uczelnia); // Dodaj implementację dla wykładowcy
+            zalogowanyWykladowca = logowanieWykladowcy(uczelnia);
+            //uruchomMenuWykladowcy(uczelnia,wykladowca);
             break;
         default:
             std::cout << "Nie ma takiej opcji" << std::endl;
