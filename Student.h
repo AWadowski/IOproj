@@ -12,20 +12,19 @@
 
 #if !defined(_STUDENT_H)
 #define _STUDENT_H
-#include "Student.h"
-
+#include <string>
 
 class Student {
 public:
-	string studentName;
-	int id;
-	string login;
-	string haslo;
-	Student();
-	~Student();
-	void SprawdzKursy();
-	void ZapiszSieNaKurs(int n);
-	void SprawdzOceny();
+    std::string studentName;
+    int id;
+    std::string login;
+    std::string haslo;
+    Student();
+    ~Student();
+    void SprawdzKursy();
+    void ZapiszSieNaKurs(int n);
+    void SprawdzOceny();
 };
 
 #endif  //_STUDENT_H

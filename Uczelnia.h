@@ -12,20 +12,19 @@
 
 #if !defined(_UCZELNIA_H)
 #define _UCZELNIA_H
-#include <String.h>
+#include <string>
+#include <vector>
 #include "Student.h"
 #include "Wykladowca.h"
 #include "Kurs.h"
-#include <vector>
-using namespace std;
 
 class Uczelnia {
 public:
-	vector<Kurs> ListaKursow;
-	vector<Student> ListaStudentow;
-	vector<Wykladowca> ListaWykladowcow;
-    string nazwa;
-	void setData(string name);
+    std::vector<Kurs> ListaKursow;
+    std::vector<Student> ListaStudentow;
+    std::vector<Wykladowca> ListaWykladowcow;
+    std::string nazwa;
+    void setData(std::string name);
 };
 
 #endif  //_UCZELNIA_H
