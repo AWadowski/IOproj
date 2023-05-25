@@ -11,6 +11,7 @@
 
 
 #include "Wykladowca.h"
+#include "Uczelnia.h"
 
 Wykladowca::Wykladowca() {
     name = "null";
@@ -22,17 +23,17 @@ Wykladowca::~Wykladowca() {
 
 }
 
-void Wykladowca::UtworzKurs(Uczelnia& uczelnia, const std::string& name) {
+Kurs Wykladowca::UtworzKurs(const std::string& name) {
     Kurs nowyKurs;
     nowyKurs.Nazwa = name;
-    uczelnia.ListaKursow.push_back(std::move(nowyKurs)); // Przeniesienie obiektu nowyKurs zamiast kopiowania
     std::cout << "Utworzono nowy kurs: " << name << std::endl;
+    return nowyKurs;
 }
 
-void Wykladowca::ModyfikujKurs(Kurs& kurs, const std::string& newName, const std::vector<std::string>& newTematy) {
+void Wykladowca::ModyfikujKurs(Kurs kurs, const std::string& newName, const std::vector<std::string>& newTematy) {
     if (!newName.empty()) {
         kurs.Nazwa = newName;
-        std::cout << "Zmieniono nazwę kursu na: " << newName << std::endl;
+        std::cout << "Zmieniono nazwe kursu na: " << newName << std::endl;
     }
 
     if (!newTematy.empty()) {
@@ -42,7 +43,7 @@ void Wykladowca::ModyfikujKurs(Kurs& kurs, const std::string& newName, const std
 }
 
 
-void Wykladowca::WystawOcene(Kurs& kurs, int studentId, int ocena) {
+void Wykladowca::WystawOcene(Kurs kurs, int studentId, int ocena) {
     for (auto& student : kurs.studenci) {
         if (student->id == studentId) {
             kurs.oceny.emplace_back(student, ocena); // Dodanie elementu na końcu wektora oceny
@@ -53,7 +54,7 @@ void Wykladowca::WystawOcene(Kurs& kurs, int studentId, int ocena) {
     std::cout << "Nie znaleziono studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
 }
 
-void Wykladowca::DodajDoKursu(Kurs& kurs, Student& student) {
+void Wykladowca::DodajDoKursu(Kurs kurs, Student student) { 
     kurs.studenci.push_back(&student);
     std::cout << "Dodano studenta " << student.studentName << " do kursu " << kurs.Nazwa << std::endl;
 }

@@ -14,9 +14,9 @@
 #define _UCZELNIA_H
 #include <string>
 #include <vector>
+#include "Kurs.h"
 #include "Student.h"
 #include "Wykladowca.h"
-#include "Kurs.h"
 
 class Uczelnia {
 public:
@@ -24,7 +24,7 @@ public:
     std::vector<Student> ListaStudentow;
     std::vector<Wykladowca> ListaWykladowcow;
     std::string nazwa;
-    void setData(std::string name);
+    void setData(const std::string& name);
 };
 
 #endif  //_UCZELNIA_H

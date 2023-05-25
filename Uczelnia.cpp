@@ -12,7 +12,7 @@
 
 #include "Uczelnia.h"
 
-void Uczelnia::setData(string name) {
+void Uczelnia::setData(const std::string& name) {
     nazwa = name;
 }
 
