@@ -12,6 +12,7 @@
 
 #if !defined(_STUDENT_H)
 #define _STUDENT_H
+#include "Student.h"
 
 
 class Student {

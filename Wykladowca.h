@@ -14,6 +14,7 @@
 #define _WYKLADOWCA_H
 #include "Kurs.h"
 #include "Student.h"
+#include "Wykladowca.h"
 #include <string.h>
 #include <iostream>
 using namespace std;
