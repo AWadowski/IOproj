@@ -12,24 +12,25 @@
 
 #if !defined(_WYKLADOWCA_H)
 #define _WYKLADOWCA_H
-#include "Kurs.h"
-#include "Student.h"
-#include "Wykladowca.h"
-#include <string.h>
+#include <string>
 #include <iostream>
-using namespace std;
+#include <vector>
+#include "Kurs.h"
+#include "Uczelnia.h"
 
 class Wykladowca {
 public:
-	string Name;
-	string login;
-	string haslo;
-	Wykladowca();
-	~Wykladowca();
-	void UtworzKurs(string name);
-	void ModyfikujKurs(Kurs kurs);
-	void WystawOcene(Kurs kurs, int studentId, int ocena);
-	void DodajDoKursu(Kurs kurs, Student student);
+    std::string name;
+    std::string login;
+    std::string haslo;
+
+    Wykladowca();
+    ~Wykladowca();
+
+    void UtworzKurs(Uczelnia& uczelnia, const std::string& name);
+    void ModyfikujKurs(Kurs& kurs, const std::string& newName, const std::vector<std::string>& newTematy);
+    void WystawOcene(Kurs& kurs, int studentId, int ocena);
+    void DodajDoKursu(Kurs& kurs, Student& student);
 };
 
 #endif  //_WYKLADOWCA_H
