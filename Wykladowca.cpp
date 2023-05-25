@@ -20,19 +20,20 @@ Wykladowca::~Wykladowca() {
 
 }
 
-void Wykladowca::UtworzKurs(name string) {
+void Wykladowca::UtworzKurs(string name) {
 
 }
 
-void Wykladowca::ModyfikujKurs() {
+void Wykladowca::ModyfikujKurs(Kurs kurs) {
 
 }
 
-void Wykladowca::WystawOcene() {
+void Wykladowca::WystawOcene(Kurs kurs, int studentId, int ocena) {
 
 }
 
-void Wykladowca::DodajDoKursu(id Student) {
+void Wykladowca::DodajDoKursu(Kurs kurs, Student student) {
 
 }
+
 

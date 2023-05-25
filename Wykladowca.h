@@ -13,6 +13,10 @@
 #if !defined(_WYKLADOWCA_H)
 #define _WYKLADOWCA_H
 #include "Kurs.h"
+#include "Student.h"
+#include <string.h>
+#include <iostream>
+using namespace std;
 
 class Wykladowca {
 public:
@@ -21,10 +25,10 @@ public:
 	string haslo;
 	Wykladowca();
 	~Wykladowca();
-	void UtworzKurs(name string);
+	void UtworzKurs(string name);
 	void ModyfikujKurs(Kurs kurs);
-	void WystawOcene(Kurs kurs, Long studentId, Long ocena);
-	void DodajDoKursu(Kurs kurs, id Student);
+	void WystawOcene(Kurs kurs, int studentId, int ocena);
+	void DodajDoKursu(Kurs kurs, Student student);
 };
 
 #endif  //_WYKLADOWCA_H
