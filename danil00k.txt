@@ -1,0 +1,2 @@
+rejestracja
+obsługa kompleksowa wykladowcy i studenta poprawienie funkcji

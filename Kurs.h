@@ -22,8 +22,8 @@ class Kurs {
 public:
     std::string Nazwa;
     std::vector<std::string> Tematy;
-    std::vector<std::pair<Student*, long>> oceny; // Wskaźnik na obiekt Student i ocena
-    std::vector<Student*> studenci; // Wskaźnik na obiekt Student
+    std::vector<std::pair<int, int>> oceny;
+    std::vector<int> studentId;
 
     void Wyswietl();
 };

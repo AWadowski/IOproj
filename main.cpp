@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Uczelnia.h"
+#include <algorithm>
+#include <vector>
 
 
 Student student; 
@@ -36,11 +38,48 @@ void uruchomMenuStudenta(Uczelnia& uczelnia, Student& student) {
     }
 }
 
-void uruchomMenuWykladowcy(Uczelnia& uczelnia, Wykladowca& wykladowca) {
+void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
+    std::vector<Kurs> kursyWykladowcy;
+    for(int i=0;i<uczelnia.ListaKursow.size();i++){
+        for(int j=0;j<wykladowca.nazwyKursow.size();j++){
+            if(uczelnia.ListaKursow[i].Nazwa==wykladowca.nazwyKursow[j]){
+                kursyWykladowcy.push_back(uczelnia.ListaKursow[i]);
+                // auto it = std::find(uczelnia.ListaKursow.begin(), uczelnia.ListaKursow.end(), uczelnia.ListaKursow[i]);
+                // if (it != uczelnia.ListaKursow.end()) {
+                //     uczelnia.ListaKursow.erase(it);
+                //     }
+                 }
+        }
+    }
+    std::cout<<"Wybierz kurs: "<<std::endl;
+    for(int i=0;i<kursyWykladowcy.size();i++){
+        std::cout<<i+1<<". "<<kursyWykladowcy[i].Nazwa<<std::endl;
+    }
     system("cls");
     int wybor;
-    // Dodaj logikę i menu dla wykładowcy
-    while (true) {
+    std::cin>>wybor;
+    std::cout<<"Wybierz studenta: "<<std::endl;
+    for(int i=0;i<uczelnia.ListaKursow[wybor].studentId.size();i++){
+        for(int j=0; j<uczelnia.ListaStudentow.size(); j++){
+            if(uczelnia.ListaKursow[wybor].studentId[i]==uczelnia.ListaStudentow[j].id){
+                std::cout<<i+1<<". "<<uczelnia.ListaStudentow[j].studentName<<std::endl;
+            }
+        }
+    }
+    int wyborStudenta;
+    std::cin>>wyborStudenta;
+    std::cout<<"Wybrany student nazywa się: "<<uczelnia.ListaStudentow[wyborStudenta].studentName<<std::endl;
+    std::cout<<"Podaj ocene: "<<std::endl;
+    int ocena;
+    std::cin>>ocena;
+    kursyWykladowcy[wybor].oceny.emplace_back(uczelnia.ListaStudentow[wyborStudenta].id,ocena);
+    system("cls");
+    std::cout<<"Wystawiono ocene: "<<ocena<<" studentowi: "<<uczelnia.ListaStudentow[wyborStudenta].studentName<<std::endl;
+}
+
+void uruchomMenuWykladowcy(Uczelnia& uczelnia, Wykladowca& wykladowca) {
+    system("cls");
+    int wybor;    while (true) {
         int ocena;
         std::string nazwaKursu;
         std::cout << "Menu wykladowcy" << std::endl;
@@ -52,10 +91,12 @@ void uruchomMenuWykladowcy(Uczelnia& uczelnia, Wykladowca& wykladowca) {
 
         switch (wybor) {
             case 1:
-                // Zaimplementuj logikę dodawania kursu
+                std::cout<<"Podaj nazwe kursu: "<<std::endl;
+                std::cin>>nazwaKursu;
+                uczelnia.ListaKursow.push_back(wykladowca.UtworzKurs(nazwaKursu));
                 break;
             case 2:
-                // Zaimplementuj logikę dodawania oceny
+                wystawianieOceny(uczelnia, wykladowca);
                 break;
             case 0:
                 std::cout << "Wylogowano wykladowce" << std::endl;
@@ -132,7 +173,7 @@ void rejestracjaStudenta(Uczelnia& uczelnia) {
     nowyStudent.studentName = studentName;
     nowyStudent.login = login;
     nowyStudent.haslo = haslo;
-    nowyStudent.id = uczelnia.ListaStudentow.size();
+    nowyStudent.id = uczelnia.ListaStudentow.size()+1;
     uczelnia.ListaStudentow.push_back(nowyStudent);
     std::cout << "Zarejestrowano nowego studenta." << std::endl;
 }

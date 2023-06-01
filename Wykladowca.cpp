@@ -27,6 +27,7 @@ Kurs Wykladowca::UtworzKurs(const std::string& name) {
     Kurs nowyKurs;
     nowyKurs.Nazwa = name;
     std::cout << "Utworzono nowy kurs: " << name << std::endl;
+    this->nazwyKursow.push_back(name);
     return nowyKurs;
 }
 
@@ -44,9 +45,9 @@ void Wykladowca::ModyfikujKurs(Kurs kurs, const std::string& newName, const std:
 
 
 void Wykladowca::WystawOcene(Kurs kurs, int studentId, int ocena) {
-    for (auto& student : kurs.studenci) {
-        if (student->id == studentId) {
-            kurs.oceny.emplace_back(student, ocena); // Dodanie elementu na końcu wektora oceny
+    for (int student : kurs.studentId) {
+        if (student == studentId) {
+            kurs.oceny.emplace_back(studentId, ocena); // Dodanie elementu na końcu wektora oceny
             std::cout << "Wystawiono ocenę " << ocena << " dla studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
             return;
         }
@@ -54,9 +55,9 @@ void Wykladowca::WystawOcene(Kurs kurs, int studentId, int ocena) {
     std::cout << "Nie znaleziono studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
 }
 
-void Wykladowca::DodajDoKursu(Kurs kurs, Student student) { 
-    kurs.studenci.push_back(&student);
-    std::cout << "Dodano studenta " << student.studentName << " do kursu " << kurs.Nazwa << std::endl;
+void Wykladowca::DodajDoKursu(Kurs kurs, int student) { 
+    kurs.studentId.push_back(student);
+    std::cout << "Dodano studenta o id" << student << " do kursu " << kurs.Nazwa << std::endl;
 }
 
 

@@ -22,6 +22,7 @@ public:
     std::string name;
     std::string login;
     std::string haslo;
+    std::vector <std::string> nazwyKursow;
 
     Wykladowca();
     ~Wykladowca();
@@ -29,7 +30,7 @@ public:
     Kurs UtworzKurs(const std::string& name);
     void ModyfikujKurs(Kurs kurs, const std::string& newName, const std::vector<std::string>& newTematy);
     void WystawOcene(Kurs kurs, int studentId, int ocena);
-    void DodajDoKursu(Kurs kurs, Student student);
+    void DodajDoKursu(Kurs kurs, int student);
 };
 
 #endif  //_WYKLADOWCA_H
