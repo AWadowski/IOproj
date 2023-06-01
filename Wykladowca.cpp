@@ -55,10 +55,5 @@ void Wykladowca::WystawOcene(Kurs kurs, int studentId, int ocena) {
     std::cout << "Nie znaleziono studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
 }
 
-void Wykladowca::DodajDoKursu(Kurs kurs, int student) { 
-    kurs.studentId.push_back(student);
-    std::cout << "Dodano studenta o id" << student << " do kursu " << kurs.Nazwa << std::endl;
-}
-
 
 
