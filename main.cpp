@@ -57,7 +57,7 @@ void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
         for(int j=0;j<wykladowca.nazwyKursow.size();j++){
             if(uczelnia.ListaKursow[i].Nazwa==wykladowca.nazwyKursow[j]){
                 kursyWykladowcy.push_back(uczelnia.ListaKursow[i]);
-                uczelnia.ListaKursow.erase(uczelnia.ListaKursow.begin()+i); 
+                //uczelnia.ListaKursow.erase(uczelnia.ListaKursow.begin()+i); 
                 }
         }
     }
@@ -67,6 +67,7 @@ void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
     }
     int wybor;
     std::cin>>wybor;
+    wybor--;
     system("cls");
     std::cout<<"Wybierz studenta: "<<std::endl;
     for(int i=0;i<uczelnia.ListaKursow[wybor].studentId.size();i++){
@@ -78,7 +79,7 @@ void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
     }
     int wyborStudenta;
     std::cin>>wyborStudenta;
-    std::cout<<"Wybrany student nazywa sie: "<<uczelnia.ListaStudentow[wyborStudenta].studentName<<std::endl;
+    wyborStudenta--;
     std::cout<<"Podaj ocene: "<<std::endl;
     int ocena;
     std::cin>>ocena;
