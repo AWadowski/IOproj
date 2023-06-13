@@ -16,11 +16,13 @@
 
 #include <string>
 #include <vector>
+#include "Ocena.h"
 class Kurs {
 public:
+    int id;
     std::string Nazwa;
     std::vector<std::string> Tematy;
-    std::vector<std::pair<int, int>> oceny;
+    std::vector<Ocena> oceny;
     std::vector<int> studentId;
 
     void Wyswietl();
