@@ -13,6 +13,9 @@
 #if !defined(_STUDENT_H)
 #define _STUDENT_H
 #include <string>
+#include <iostream>
+#include <vector>
+#include "Kurs.h"
 
 class Student {
 public:
@@ -22,9 +25,9 @@ public:
     std::string haslo;
     Student();
     ~Student();
-    void SprawdzKursy();
-    void ZapiszSieNaKurs(int n);
-    void SprawdzOceny();
+    void SprawdzKursy(std::vector<Kurs> listaKursow);
+    Kurs ZapiszSieNaKurs(Kurs kurs);
+    void SprawdzOceny(std::vector<Kurs> listaKursow);
 };
 
 #endif  //_STUDENT_H

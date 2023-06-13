@@ -2,9 +2,22 @@
 #include "Uczelnia.h"
 #include <algorithm>
 #include <vector>
+#include "Student.h"
+#include "Wykladowca.h"
+#include "Kurs.h"
 
-
-Student student; 
+void zapisNaKurs(Uczelnia& uczelnia, Student& student){
+    int wyborKursu;
+    std::cout<<"Wybierz kurs: "<<std::endl;
+    for(int i=0;i<uczelnia.ListaKursow.size();i++){
+        std::cout<<i+1<<". "<<uczelnia.ListaKursow[i].Nazwa<<std::endl;
+    }
+    std::cin>>wyborKursu;
+    wyborKursu--;
+    uczelnia.ListaKursow.erase(uczelnia.ListaKursow.begin()+wyborKursu); 
+    Kurs kurs=uczelnia.ListaKursow[wyborKursu];
+    uczelnia.ListaKursow.push_back(student.ZapiszSieNaKurs(kurs));    
+}
 
 void uruchomMenuStudenta(Uczelnia& uczelnia, Student& student) {
     int wybor;
@@ -20,13 +33,13 @@ void uruchomMenuStudenta(Uczelnia& uczelnia, Student& student) {
         system("cls");
         switch (wybor) {
             case 1:
-                uczelnia.ListaStudentow[0].SprawdzKursy(); // Przykładowe wywołanie metody dla pierwszego studenta na liście
+                student.SprawdzKursy(uczelnia.ListaKursow);
                 break;
             case 2:
-                // Zaimplementuj logikę zapisu na kurs
+                zapisNaKurs(uczelnia, student);
                 break;
             case 3:
-                // Zaimplementuj logikę sprawdzania ocen
+                student.SprawdzOceny(uczelnia.ListaKursow);
                 break;
             case 0:
                 std::cout << "Wylogowano studenta" << std::endl;
@@ -44,20 +57,17 @@ void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
         for(int j=0;j<wykladowca.nazwyKursow.size();j++){
             if(uczelnia.ListaKursow[i].Nazwa==wykladowca.nazwyKursow[j]){
                 kursyWykladowcy.push_back(uczelnia.ListaKursow[i]);
-                // auto it = std::find(uczelnia.ListaKursow.begin(), uczelnia.ListaKursow.end(), uczelnia.ListaKursow[i]);
-                // if (it != uczelnia.ListaKursow.end()) {
-                //     uczelnia.ListaKursow.erase(it);
-                //     }
-                 }
+                uczelnia.ListaKursow.erase(uczelnia.ListaKursow.begin()+i); 
+                }
         }
     }
     std::cout<<"Wybierz kurs: "<<std::endl;
     for(int i=0;i<kursyWykladowcy.size();i++){
         std::cout<<i+1<<". "<<kursyWykladowcy[i].Nazwa<<std::endl;
     }
-    system("cls");
     int wybor;
     std::cin>>wybor;
+    system("cls");
     std::cout<<"Wybierz studenta: "<<std::endl;
     for(int i=0;i<uczelnia.ListaKursow[wybor].studentId.size();i++){
         for(int j=0; j<uczelnia.ListaStudentow.size(); j++){
@@ -68,13 +78,41 @@ void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
     }
     int wyborStudenta;
     std::cin>>wyborStudenta;
-    std::cout<<"Wybrany student nazywa się: "<<uczelnia.ListaStudentow[wyborStudenta].studentName<<std::endl;
+    std::cout<<"Wybrany student nazywa sie: "<<uczelnia.ListaStudentow[wyborStudenta].studentName<<std::endl;
     std::cout<<"Podaj ocene: "<<std::endl;
     int ocena;
     std::cin>>ocena;
     kursyWykladowcy[wybor].oceny.emplace_back(uczelnia.ListaStudentow[wyborStudenta].id,ocena);
     system("cls");
     std::cout<<"Wystawiono ocene: "<<ocena<<" studentowi: "<<uczelnia.ListaStudentow[wyborStudenta].studentName<<std::endl;
+    for(int i=0;i<kursyWykladowcy.size();i++){
+        uczelnia.ListaKursow.push_back(kursyWykladowcy[i]);
+    }
+}
+
+void modyfikujKurs(Uczelnia& uczelnia, Wykladowca& wykladowca){
+    // modyfikacja kursu
+    std::vector<Kurs> kursyWykladowcy;
+    for(int i=0;i<uczelnia.ListaKursow.size();i++){
+        for(int j=0;j<wykladowca.nazwyKursow.size();j++){
+            if(uczelnia.ListaKursow[i].Nazwa==wykladowca.nazwyKursow[j]){
+                kursyWykladowcy.push_back(uczelnia.ListaKursow[i]);
+                uczelnia.ListaKursow.erase(uczelnia.ListaKursow.begin()+i); 
+                }
+        }
+    }
+    std::cout<<"Wybierz kurs: "<<std::endl;
+    for(int i=0;i<kursyWykladowcy.size();i++){
+        std::cout<<i+1<<". "<<kursyWykladowcy[i].Nazwa<<std::endl;
+    }
+    int wybor;
+    std::cin>>wybor;
+    system("cls");
+    wykladowca.ModyfikujKurs(kursyWykladowcy[wybor-1]);
+    for(int i=0 ; i<kursyWykladowcy.size();i++){
+        uczelnia.ListaKursow.push_back(kursyWykladowcy[i]);
+    }
+
 }
 
 void uruchomMenuWykladowcy(Uczelnia& uczelnia, Wykladowca& wykladowca) {
@@ -97,6 +135,9 @@ void uruchomMenuWykladowcy(Uczelnia& uczelnia, Wykladowca& wykladowca) {
                 break;
             case 2:
                 wystawianieOceny(uczelnia, wykladowca);
+                break;
+            case 3:
+                modyfikujKurs(uczelnia, wykladowca);
                 break;
             case 0:
                 std::cout << "Wylogowano wykladowce" << std::endl;
@@ -211,7 +252,7 @@ void uruchomMenu(Uczelnia& uczelnia) {
     switch (wybor) {
         case 1:
             zalogowanyStudent = logowanieStudenta(uczelnia);
-            if(zalogowanyStudent.id < uczelnia.ListaStudentow.size()){
+            if(zalogowanyStudent.id <= uczelnia.ListaStudentow.size()){
             uruchomMenuStudenta(uczelnia, zalogowanyStudent);
             }
             break;

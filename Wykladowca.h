@@ -28,7 +28,7 @@ public:
     ~Wykladowca();
 
     Kurs UtworzKurs(const std::string& name);
-    void ModyfikujKurs(Kurs kurs, const std::string& newName, const std::vector<std::string>& newTematy);
+    void ModyfikujKurs(Kurs kurs);
     void WystawOcene(Kurs kurs, int studentId, int ocena);
 };
 

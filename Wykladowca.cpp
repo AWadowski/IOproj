@@ -11,7 +11,6 @@
 
 
 #include "Wykladowca.h"
-#include "Uczelnia.h"
 
 Wykladowca::Wykladowca() {
     name = "null";
@@ -31,15 +30,32 @@ Kurs Wykladowca::UtworzKurs(const std::string& name) {
     return nowyKurs;
 }
 
-void Wykladowca::ModyfikujKurs(Kurs kurs, const std::string& newName, const std::vector<std::string>& newTematy) {
+void Wykladowca::ModyfikujKurs(Kurs kurs) {
+    std::string newName;
+    std::vector<std::string> newTematy;
+    std::cout<<"Czy chcesz zmienić nazwe kursu T/N?"<<std::endl;
+    std::string zmiana;
+    std::cin>>zmiana;
+    if(zmiana == "T" || zmiana == "t") {
+        std::cout<<"Podaj nową nazwę kursu: "<<std::endl;
+        std::cin>>newName;
+    }
     if (!newName.empty()) {
         kurs.Nazwa = newName;
         std::cout << "Zmieniono nazwe kursu na: " << newName << std::endl;
     }
-
-    if (!newTematy.empty()) {
-        kurs.Tematy = newTematy;
-        std::cout << "Zmieniono tematy kursu." << std::endl;
+    std::cout<<"Czy chcesz zmienić tematy kursu T/N?"<<std::endl;
+    std::cin>>zmiana;
+    if(zmiana == "T" || zmiana == "t") {
+        kurs.Tematy.clear();
+        std::cout<<"Podaj nowe tematy kursu: "<<std::endl;
+        std::string temat;
+        while(temat != "0") {
+            std::cin>>temat;
+            if(temat != "0") {
+                newTematy.push_back(temat);
+            }
+        }
     }
 }
 

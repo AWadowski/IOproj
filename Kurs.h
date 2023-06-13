@@ -16,8 +16,6 @@
 
 #include <string>
 #include <vector>
-#include "Student.h"
-
 class Kurs {
 public:
     std::string Nazwa;
