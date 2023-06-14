@@ -22,15 +22,17 @@ Wykladowca::~Wykladowca() {
 
 }
 
-Kurs Wykladowca::UtworzKurs(const std::string& name) {
+Kurs Wykladowca::UtworzKurs(std::string name) {
     Kurs nowyKurs;
     nowyKurs.Nazwa = name;
+    liczbaKursow++;
+    nowyKurs.id = liczbaKursow;
     std::cout << "Utworzono nowy kurs: " << name << std::endl;
-    this->nazwyKursow.push_back(name);
+    nazwyKursow.push_back(name);
     return nowyKurs;
 }
 
-void Wykladowca::ModyfikujKurs(Kurs kurs) {
+void Wykladowca::ModyfikujKurs(Kurs& kurs) {
     std::string newName;
     std::vector<std::string> newTematy;
     std::cout<<"Czy chcesz zmienić nazwe kursu T/N?"<<std::endl;
@@ -43,6 +45,7 @@ void Wykladowca::ModyfikujKurs(Kurs kurs) {
     if (!newName.empty()) {
         kurs.Nazwa = newName;
         std::cout << "Zmieniono nazwe kursu na: " << newName << std::endl;
+        nazwyKursow.push_back(newName);
     }
     std::cout<<"Czy chcesz zmienić tematy kursu T/N?"<<std::endl;
     std::cin>>zmiana;
@@ -60,12 +63,16 @@ void Wykladowca::ModyfikujKurs(Kurs kurs) {
 }
 
 
-void Wykladowca::WystawOcene(Kurs kurs, int studentId, int ocena) {
+void Wykladowca::WystawOcene(Kurs& kurs, int studentId, int ocena) {
+    std::cout<<"Wystawianie oceny: "<<std::endl;
     for (int student : kurs.studentId) {
         if (student == studentId) {
-            kurs.oceny.emplace_back(studentId, ocena); // Dodanie elementu na końcu wektora oceny
+            Ocena nowaOcena;
+            nowaOcena.ocena = ocena;
+            nowaOcena.studentId = studentId;
+            std::cout<<"PROBLEMY!!!"<<std::endl;
+            kurs.oceny.push_back(nowaOcena); 
             std::cout << "Wystawiono ocenę " << ocena << " dla studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
-            return;
         }
     }
     std::cout << "Nie znaleziono studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;

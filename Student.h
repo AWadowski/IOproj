@@ -25,9 +25,9 @@ public:
     std::string haslo;
     Student();
     ~Student();
-    void SprawdzKursy(std::vector<Kurs> listaKursow);
-    Kurs ZapiszSieNaKurs(Kurs kurs);
-    void SprawdzOceny(std::vector<Kurs> listaKursow);
+    void SprawdzKursy(std::vector<Kurs>& listaKursow);
+    Kurs ZapiszSieNaKurs(Kurs& kurs);
+    void SprawdzOceny(std::vector<Kurs>& listaKursow);
 };
 
 #endif  //_STUDENT_H

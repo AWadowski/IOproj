@@ -16,6 +16,7 @@
 #include <iostream>
 #include <vector>
 #include "Kurs.h"
+#include "Ocena.h"
 
 class Wykladowca {
 public:
@@ -23,13 +24,13 @@ public:
     std::string login;
     std::string haslo;
     std::vector <std::string> nazwyKursow;
-
+    int liczbaKursow;
     Wykladowca();
     ~Wykladowca();
 
-    Kurs UtworzKurs(const std::string& name);
-    void ModyfikujKurs(Kurs kurs);
-    void WystawOcene(Kurs kurs, int studentId, int ocena);
+    Kurs UtworzKurs(std::string name);
+    void ModyfikujKurs(Kurs& kurs);
+    void WystawOcene(Kurs& kurs, int studentId, int ocena);
 };
 
 #endif  //_WYKLADOWCA_H

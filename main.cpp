@@ -5,6 +5,7 @@
 #include "Student.h"
 #include "Wykladowca.h"
 #include "Kurs.h"
+#include "Ocena.h"
 
 void zapisNaKurs(Uczelnia& uczelnia, Student& student){
     int wyborKursu;
@@ -14,9 +15,9 @@ void zapisNaKurs(Uczelnia& uczelnia, Student& student){
     }
     std::cin>>wyborKursu;
     wyborKursu--;
-    uczelnia.ListaKursow.erase(uczelnia.ListaKursow.begin()+wyborKursu); 
     Kurs kurs=uczelnia.ListaKursow[wyborKursu];
-    uczelnia.ListaKursow.push_back(student.ZapiszSieNaKurs(kurs));    
+    student.ZapiszSieNaKurs(kurs);  
+    uczelnia.ListaKursow[wyborKursu]=kurs;  
 }
 
 void uruchomMenuStudenta(Uczelnia& uczelnia, Student& student) {
@@ -57,13 +58,14 @@ void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
         for(int j=0;j<wykladowca.nazwyKursow.size();j++){
             if(uczelnia.ListaKursow[i].Nazwa==wykladowca.nazwyKursow[j]){
                 kursyWykladowcy.push_back(uczelnia.ListaKursow[i]);
-                //uczelnia.ListaKursow.erase(uczelnia.ListaKursow.begin()+i); 
+                uczelnia.ListaKursow.erase(uczelnia.ListaKursow.begin()+i); 
                 }
         }
     }
     std::cout<<"Wybierz kurs: "<<std::endl;
     for(int i=0;i<kursyWykladowcy.size();i++){
-        std::cout<<i+1<<". "<<kursyWykladowcy[i].Nazwa<<std::endl;
+        std::cout<<i+1<<". ";
+        kursyWykladowcy[i].Wyswietl();
     }
     int wybor;
     std::cin>>wybor;
@@ -72,7 +74,7 @@ void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
     std::cout<<"Wybierz studenta: "<<std::endl;
     for(int i=0;i<uczelnia.ListaKursow[wybor].studentId.size();i++){
         for(int j=0; j<uczelnia.ListaStudentow.size(); j++){
-            if(uczelnia.ListaKursow[wybor].studentId[i]==uczelnia.ListaStudentow[j].id){
+            if(kursyWykladowcy[wybor].studentId[i]==uczelnia.ListaStudentow[j].id){
                 std::cout<<i+1<<". "<<uczelnia.ListaStudentow[j].studentName<<std::endl;
             }
         }
@@ -81,18 +83,16 @@ void wystawianieOceny(Uczelnia& uczelnia, Wykladowca& wykladowca){
     std::cin>>wyborStudenta;
     wyborStudenta--;
     std::cout<<"Podaj ocene: "<<std::endl;
-    int ocena;
-    std::cin>>ocena;
-    kursyWykladowcy[wybor].oceny.emplace_back(uczelnia.ListaStudentow[wyborStudenta].id,ocena);
+    int ocenaNowa;
+    std::cin>>ocenaNowa;
+    wykladowca.WystawOcene(kursyWykladowcy[wybor], kursyWykladowcy[wybor].studentId[wyborStudenta] ,ocenaNowa);
     system("cls");
-    std::cout<<"Wystawiono ocene: "<<ocena<<" studentowi: "<<uczelnia.ListaStudentow[wyborStudenta].studentName<<std::endl;
     for(int i=0;i<kursyWykladowcy.size();i++){
         uczelnia.ListaKursow.push_back(kursyWykladowcy[i]);
     }
 }
 
 void modyfikujKurs(Uczelnia& uczelnia, Wykladowca& wykladowca){
-    // modyfikacja kursu
     std::vector<Kurs> kursyWykladowcy;
     for(int i=0;i<uczelnia.ListaKursow.size();i++){
         for(int j=0;j<wykladowca.nazwyKursow.size();j++){
@@ -110,7 +110,13 @@ void modyfikujKurs(Uczelnia& uczelnia, Wykladowca& wykladowca){
     std::cin>>wybor;
     system("cls");
     wykladowca.ModyfikujKurs(kursyWykladowcy[wybor-1]);
+    for(int i=0 ; i<uczelnia.ListaWykladowcow.size(); i++){
+        if(uczelnia.ListaWykladowcow[i].name==wykladowca.name){
+            uczelnia.ListaWykladowcow[i]=wykladowca;
+        }
+    }
     for(int i=0 ; i<kursyWykladowcy.size();i++){
+        std::cout<<"Zwrocono kurs"<<std::endl;
         uczelnia.ListaKursow.push_back(kursyWykladowcy[i]);
     }
 
@@ -133,6 +139,11 @@ void uruchomMenuWykladowcy(Uczelnia& uczelnia, Wykladowca& wykladowca) {
                 std::cout<<"Podaj nazwe kursu: "<<std::endl;
                 std::cin>>nazwaKursu;
                 uczelnia.ListaKursow.push_back(wykladowca.UtworzKurs(nazwaKursu));
+                for(int i=0;i<uczelnia.ListaWykladowcow.size();i++){
+                    if(uczelnia.ListaWykladowcow[i].name==wykladowca.name){
+                        uczelnia.ListaWykladowcow[i].nazwyKursow.push_back(nazwaKursu);
+                    }
+                }
                 break;
             case 2:
                 wystawianieOceny(uczelnia, wykladowca);
