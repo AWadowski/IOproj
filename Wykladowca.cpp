@@ -70,12 +70,12 @@ void Wykladowca::WystawOcene(Kurs& kurs, int studentId, int ocena) {
             Ocena nowaOcena;
             nowaOcena.ocena = ocena;
             nowaOcena.studentId = studentId;
-            std::cout<<"PROBLEMY!!!"<<std::endl;
             kurs.oceny.push_back(nowaOcena); 
             std::cout << "Wystawiono ocenę " << ocena << " dla studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
         }
+        else std::cout << "Nie znaleziono studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
+
     }
-    std::cout << "Nie znaleziono studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
 }
 
 

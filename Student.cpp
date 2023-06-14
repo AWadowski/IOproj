@@ -22,7 +22,13 @@ Student::~Student() {
 
 void Student::SprawdzKursy(std::vector<Kurs>& ListaKursow) {
     for(int i = 0; i < ListaKursow.size(); i++) {
-        std::cout << ListaKursow[i].Nazwa << std::endl;
+        if(ListaKursow[i].studentId.size() > 0){
+            for(int j = 0; j < ListaKursow[i].studentId.size(); j++){
+                if(ListaKursow[i].studentId[j] == id){
+                    ListaKursow[i].Wyswietl();
+                }
+            }
+        }
     }
 }
 
@@ -33,9 +39,11 @@ Kurs Student::ZapiszSieNaKurs(Kurs& kurs) {
 
 void Student::SprawdzOceny(std::vector<Kurs>& ListaKursow) {
     for(int i = 0; i < ListaKursow.size(); i++) {
-        for(int j = 0; j < ListaKursow[i].studentId.size(); j++) {
-            if(ListaKursow[i].studentId[j] == id) {
-                std::cout << ListaKursow[i].Nazwa << ": " << ListaKursow[i].oceny[j].ocena << std::endl;
+        if(ListaKursow[i].studentId.size() > 0){
+            for(int j = 0; j < ListaKursow[i].studentId.size(); j++) {
+                if(ListaKursow[i].studentId[j] == id) {
+                    std::cout << ListaKursow[i].Nazwa << ": " << ListaKursow[i].oceny[j].ocena << std::endl;
+                }
             }
         }
     }
