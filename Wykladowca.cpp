@@ -59,6 +59,7 @@ void Wykladowca::ModyfikujKurs(Kurs& kurs) {
                 newTematy.push_back(temat);
             }
         }
+        kurs.Tematy=newTematy;
     }
 }
 
