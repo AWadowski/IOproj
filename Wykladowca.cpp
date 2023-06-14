@@ -35,7 +35,7 @@ Kurs Wykladowca::UtworzKurs(std::string name) {
 void Wykladowca::ModyfikujKurs(Kurs& kurs) {
     std::string newName;
     std::vector<std::string> newTematy;
-    std::cout<<"Czy chcesz zmienić nazwe kursu T/N?"<<std::endl;
+    std::cout<<"Czy chcesz zmienic nazwe kursu T/N?"<<std::endl;
     std::string zmiana;
     std::cin>>zmiana;
     if(zmiana == "T" || zmiana == "t") {
@@ -47,7 +47,7 @@ void Wykladowca::ModyfikujKurs(Kurs& kurs) {
         std::cout << "Zmieniono nazwe kursu na: " << newName << std::endl;
         nazwyKursow.push_back(newName);
     }
-    std::cout<<"Czy chcesz zmienić tematy kursu T/N?"<<std::endl;
+    std::cout<<"Czy chcesz zmienic tematy kursu T/N?"<<std::endl;
     std::cin>>zmiana;
     if(zmiana == "T" || zmiana == "t") {
         kurs.Tematy.clear();
@@ -71,6 +71,7 @@ void Wykladowca::WystawOcene(Kurs& kurs, int studentId, int ocena) {
             Ocena nowaOcena;
             nowaOcena.ocena = ocena;
             nowaOcena.studentId = studentId;
+            kurs.oceny.pop_back();
             kurs.oceny.push_back(nowaOcena); 
             std::cout << "Wystawiono ocenę " << ocena << " dla studenta o ID: " << studentId << " w kursie " << kurs.Nazwa << std::endl;
         }
